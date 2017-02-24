@@ -37,7 +37,7 @@ public class CampaignServiceImpl implements CampaignService {
 	@Override
 	public Response addCampaign(Campaign campaign) {
 		System.out.println("...invoking addCampaign, partnerid is... " + campaign.getPartner_id());
-		campaign.setCreation_time(Calendar.getInstance());
+		campaign.setCreation_and_duration_time(Calendar.getInstance());
 		campaign.setCampaign_id(currentId++);
 
 		if (campaigns.get(campaign.getPartner_id()) == null) {
@@ -46,6 +46,7 @@ public class CampaignServiceImpl implements CampaignService {
 			campaigns.put(campaign.getPartner_id(), camplist);
 		} else {
 			for (int i = 0; i < campaigns.get(campaign.getPartner_id()).size(); i++) {
+				System.out.println("****invoking addCampaign already existing******* " + campaign.getPartner_id());
 				if (campaigns.get(campaign.getPartner_id()).get(i).isActive() == true) {
 					throw new SomeBusinessException("Already have an active campaign");
 				} else {
