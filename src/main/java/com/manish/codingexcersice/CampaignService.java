@@ -9,7 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-@Produces({"application/xml", "application/json" })
+@Produces({"application/json","application/xml"})
 public interface CampaignService {
 
 	@GET
