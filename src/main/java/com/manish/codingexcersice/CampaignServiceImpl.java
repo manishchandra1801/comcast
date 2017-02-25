@@ -3,6 +3,7 @@ package com.manish.codingexcersice;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,23 +35,28 @@ public class CampaignServiceImpl implements CampaignService {
 
 		return camp;
 	}
+	@SuppressWarnings("unused")
 	@Override
 	public Response addCampaign(Campaign campaign) {
-		System.out.println("...invoking addCampaign, partnerid is... " + campaign.getPartner_id());
+		
 		campaign.setCreation_and_duration_time(Calendar.getInstance());
 		campaign.setCampaign_id(currentId++);
 
 		if (campaigns.get(campaign.getPartner_id()) == null) {
+			System.out.println("...invoking addCampaign, partnerid is... " + campaign.getPartner_id());
 			ArrayList<Campaign> camplist = new ArrayList<Campaign>();
 			camplist.add(campaign);
 			campaigns.put(campaign.getPartner_id(), camplist);
 		} else {
-			for (int i = 0; i < campaigns.get(campaign.getPartner_id()).size(); i++) {
+			System.out.println("MAnish is a fake");
+			for (int i = campaigns.get(campaign.getPartner_id()).size()-1; i >= 0;i--) {
 				System.out.println("****invoking addCampaign already existing******* " + campaign.getPartner_id());
 				if (campaigns.get(campaign.getPartner_id()).get(i).isActive() == true) {
+					System.out.println(campaigns.get(campaign.getPartner_id()).get(i).isActive()+" boolean value");
 					throw new SomeBusinessException("Already have an active campaign");
 				} else {
 					campaigns.get(campaign.getPartner_id()).add(campaign);
+					break;
 				}
 			}
 
