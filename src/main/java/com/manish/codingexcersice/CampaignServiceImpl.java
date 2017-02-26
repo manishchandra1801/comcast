@@ -23,9 +23,10 @@ public class CampaignServiceImpl implements CampaignService {
 	public Campaign getCampaign(String id) {
 		Campaign camp = null;
 		System.out.println("...invoking getCampaign, partnerid is... " + id);
-		for (int i = 0; i < campaigns.get(id).size(); i++) {
+		for (int i = campaigns.get(id).size()-1; i >=0 ; i--) {
 			if (campaigns.get(id).get(i).isActive() == true) {
 				camp = campaigns.get(id).get(i);
+				break;
 			} else {
 				throw new SomeBusinessException("No active campaign");
 			}
