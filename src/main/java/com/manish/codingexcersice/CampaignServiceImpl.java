@@ -48,7 +48,7 @@ public class CampaignServiceImpl implements CampaignService {
 			camplist.add(campaign);
 			campaigns.put(campaign.getPartner_id(), camplist);
 		} else {
-			System.out.println("MAnish is a fake");
+			
 			for (int i = campaigns.get(campaign.getPartner_id()).size()-1; i >= 0;i--) {
 				System.out.println("****invoking addCampaign already existing******* " + campaign.getPartner_id());
 				if (campaigns.get(campaign.getPartner_id()).get(i).isActive() == true) {
