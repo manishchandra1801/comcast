@@ -1,5 +1,7 @@
 package com.manish.codingexcersice;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +17,10 @@ public interface CampaignService {
 	@GET
 	@Path("/ad/{id}/")
 	Campaign getCampaign(@PathParam("id") String id);
+	
+	@GET
+	@Path("/ad/GETall/")
+	List<Campaign> getAllCampaign();
 
 	@POST
 	@Path("/ad/")

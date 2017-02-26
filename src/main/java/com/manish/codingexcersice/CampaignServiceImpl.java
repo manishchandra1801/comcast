@@ -3,19 +3,17 @@ package com.manish.codingexcersice;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import com.manish.codingexcersiceex.exceptions.SomeBusinessException;
-
-
-
-
 
 public class CampaignServiceImpl implements CampaignService {
 	private int currentId = 1;
@@ -35,10 +33,11 @@ public class CampaignServiceImpl implements CampaignService {
 
 		return camp;
 	}
+
 	@SuppressWarnings("unused")
 	@Override
 	public Response addCampaign(Campaign campaign) {
-		
+
 		campaign.setCreation_and_duration_time(Calendar.getInstance());
 		campaign.setCampaign_id(currentId++);
 
@@ -48,11 +47,11 @@ public class CampaignServiceImpl implements CampaignService {
 			camplist.add(campaign);
 			campaigns.put(campaign.getPartner_id(), camplist);
 		} else {
-			
-			for (int i = campaigns.get(campaign.getPartner_id()).size()-1; i >= 0;i--) {
+
+			for (int i = campaigns.get(campaign.getPartner_id()).size() - 1; i >= 0; i--) {
 				System.out.println("****invoking addCampaign already existing******* " + campaign.getPartner_id());
 				if (campaigns.get(campaign.getPartner_id()).get(i).isActive() == true) {
-					System.out.println(campaigns.get(campaign.getPartner_id()).get(i).isActive()+" boolean value");
+					System.out.println(campaigns.get(campaign.getPartner_id()).get(i).isActive() + " boolean value");
 					throw new SomeBusinessException("Already have an active campaign");
 				} else {
 					campaigns.get(campaign.getPartner_id()).add(campaign);
@@ -63,5 +62,17 @@ public class CampaignServiceImpl implements CampaignService {
 		}
 
 		return Response.ok(campaign).build();
+	}
+
+	@Override
+	public List<Campaign> getAllCampaign() {
+		System.out.println("...invoking getAllCampaign, partnerid is...Nothing ");
+		List<Campaign> camplist = new ArrayList<Campaign>();
+		for (Entry<String, List<Campaign>> entry : campaigns.entrySet()) {
+			for (int i = 0; i < campaigns.get(entry.getKey()).size(); i++) {
+				camplist.add(campaigns.get(entry.getKey()).get(i));
+			}
+		}
+		return camplist;
 	}
 }
